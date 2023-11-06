@@ -38,7 +38,7 @@ const thoughtControllers = {
         return res.status(404).json({ message: "No thought with that ID" });
       }
 
-      await Thought.deleteMany({ _id: { $in: hought.users } });
+      await Thought.deleteMany({ _id: { $in: thought.users } });
       res.json({ message: "Thoughts deleted!" });
     } catch (err) {
       res.status(500).json(err);
