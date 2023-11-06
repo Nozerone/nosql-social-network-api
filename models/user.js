@@ -29,7 +29,7 @@ const userSchema = new Schema(
     ],
   },
   {
-    timestamps,
+    
     toJSON: {
       virtuals: true,
     },

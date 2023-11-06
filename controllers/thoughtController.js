@@ -65,3 +65,5 @@ const thoughtControllers = {
     }
   },
 };
+
+module.exports = thoughtControllers;

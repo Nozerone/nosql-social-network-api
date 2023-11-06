@@ -9,11 +9,10 @@ deleteThought,
 
 } = require('../../controllers/thoughtController');
 
-router.route('/').get(getThoughs).post(createThought);
+router.route('/').get(getAllThoughts).post(createThought);
 
 router
 .route('/:thoughtId')
-.get(getAllThoughts)
 .get(getSingleThought)
 .put(updateThought)
 .delete(deleteThought);
