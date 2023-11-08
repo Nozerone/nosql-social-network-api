@@ -14,7 +14,7 @@ const thoughtControllers = {
   // Get single thought
   async getSingleThought(req, res) {
     try {
-      const singleThought = await Thought.findById(req.params.userId);
+      const singleThought = await Thought.findById(req.params.thoughtId);
       res.json(singleThought);
     } catch (error) {
       console.log(error);
@@ -68,9 +68,9 @@ const thoughtControllers = {
 // Add a reaction
   async addReaction(req, res) {
     try {
-      const newReaction = await User.findOneAndUpdate(
-        { _id: req.params.userId },
-        { $addToSet: { reactions: req.params.reactionId } },
+      const newReaction = await Thought.findByIdAndUpdate(
+        { _id: req.params.thoughtId },
+        { $addToSet: { reactions: req.body.reactionId } },
         { new: true }
       );
       res.json(newReaction );
@@ -81,7 +81,7 @@ const thoughtControllers = {
   // Detele a Reaction 
   async deleteReaction (req, res) {
     try {
-      const user = await user.findOneAndUpdate(
+      const user = await reaction.findOneAndUpdate(
         { _id: req.params.userId },
         { $pull: { reactions: req.params.reactionId } },
         { new: true }
