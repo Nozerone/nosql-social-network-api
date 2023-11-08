@@ -11,6 +11,7 @@ const thoughtControllers = {
       console.log(error);
     }
   },
+  // Get single thought
   async getSingleThought(req, res) {
     try {
       const singleThought = await Thought.findById(req.params.userId);
@@ -27,11 +28,11 @@ const thoughtControllers = {
       console.log(error);
     }
   },
-  // Delete a thought ***Check on this one***
+  // Delete a thought 
   async deleteThought(req, res) {
     try {
       const thought = await thought.findOneAndDelete({
-        _id: req.params.thoughtId,
+        _id: req.params.thoughtId
       });
 
       if (!thought) {
@@ -44,7 +45,7 @@ const thoughtControllers = {
       res.status(500).json(err);
     }
   },
-
+// Update a thought
   async updateThought(req, res) {
     try {
       const updateTheThought = await Thought.findOneAndUpdate(
@@ -62,6 +63,38 @@ const thoughtControllers = {
       res.json(updateTheThought);
     } catch (error) {
       console.log(error);
+    }
+  },
+// Add a reaction
+  async addReaction(req, res) {
+    try {
+      const newReaction = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $addToSet: { reactions: req.params.reactionId } },
+        { new: true }
+      );
+      res.json(newReaction );
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  // Detele a Reaction 
+  async deleteReaction (req, res) {
+    try {
+      const user = await user.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $pull: { reactions: req.params.reactionId } },
+        { new: true }
+      );
+
+      if (!user) {
+        return res.status(404).json({ message: "No such reaction exists" });
+      }
+
+      res.json({ message: "Reaction successfully deleted" });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
     }
   },
 };

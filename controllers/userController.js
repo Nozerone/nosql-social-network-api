@@ -1,6 +1,7 @@
 const { restart } = require("nodemon");
 const User = require("../models/user");
 
+// Get all users
 const userController = {
   async getAllUsers(req, res) {
     try {
@@ -10,6 +11,7 @@ const userController = {
       console.log(error);
     }
   },
+  // Get single user
   async getSingleUser(req, res) {
     try {
       const singleUser = await User.findById(req.params.userId);
@@ -18,7 +20,7 @@ const userController = {
       console.log(error);
     }
   },
-
+  // Create a user
   async createUser(req, res) {
     try {
       const newUser = await User.create(req.body);
@@ -27,6 +29,7 @@ const userController = {
       console.log(error);
     }
   },
+  // Delete a user
   async deleteUser(req, res) {
     try {
       const user = await user.findOneAndRemove({ _id: req.params.userId });
@@ -35,12 +38,13 @@ const userController = {
         return res.status(404).json({ message: "No such user exists" });
       }
 
-      res.json({ message: "Student successfully deleted" });
+      res.json({ message: "User successfully deleted" });
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
     }
   },
+  // Update a user
   async updateUser(req, res) {
     try {
       const updateTheUser = await User.findOneAndUpdate(
@@ -60,17 +64,27 @@ const userController = {
       console.log(error);
     }
   },
+  // Add a friend
   async addFriend(req, res) {
     try {
-      const newFriend = await User.findOneAndUpdate({ _id:req.params.userId }, { $addToSet:{ friends: req.params.friendId } }, { new: true } );
+      const newFriend = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $addToSet: { friends: req.params.friendId } },
+        { new: true }
+      );
       res.json(newFriend);
     } catch (error) {
       console.log(error);
     }
   },
+  // Detele a friend
   async deleteFriend(req, res) {
     try {
-      const user = await user.findOneAndUpdate({ _id: req.params.userId }, { $pull:{ friends: req.params.friendId } }, { new: true } );
+      const user = await user.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $pull: { friends: req.params.friendId } },
+        { new: true }
+      );
 
       if (!user) {
         return res.status(404).json({ message: "No such user exists" });
@@ -83,4 +97,5 @@ const userController = {
     }
   },
 };
+
 module.exports = userController;
