@@ -1,5 +1,6 @@
 const { restart } = require("nodemon");
 const Thought = require("../models/thought");
+const User = require("../models/user");
 
 const thoughtControllers = {
   //Get all thoughts
@@ -31,7 +32,7 @@ const thoughtControllers = {
   // Delete a thought 
   async deleteThought(req, res) {
     try {
-      const thought = await thought.findOneAndDelete({
+      const thought = await Thought.findOneAndDelete({
         _id: req.params.thoughtId
       });
 
@@ -81,7 +82,7 @@ const thoughtControllers = {
   // Detele a Reaction 
   async deleteReaction (req, res) {
     try {
-      const user = await reaction.findOneAndUpdate(
+      const user = await Thought.findByIdAndUpdate(
         { _id: req.params.userId },
         { $pull: { reactions: req.params.reactionId } },
         { new: true }

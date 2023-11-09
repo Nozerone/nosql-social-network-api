@@ -12,7 +12,8 @@ deleteReaction
 } = require('../../controllers/thoughtController');
 // /api/thought
 router
-.route('/').get(getAllThoughts).post(createThought);
+.route('/').get(getAllThoughts)
+.post(createThought);
 
 // /api/thoughts/:thoughtID
 router
@@ -21,7 +22,7 @@ router
 .delete(deleteThought)
 .put(updateThought);
 
-// /api/thoughts/:thoughtId/reactions/
+// /api/thoughts/:thoughtId/reactions/:reactionsId
 router.route('/:thoughtId/reactions')
 .post(addReaction)
 .delete(deleteReaction)

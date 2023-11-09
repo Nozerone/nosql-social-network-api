@@ -32,7 +32,7 @@ const userController = {
   // Delete a user
   async deleteUser(req, res) {
     try {
-      const user = await user.findOneAndRemove({ _id: req.params.userId });
+      const user = await User.findOneAndDelete({ _id: req.params.userId });
 
       if (!user) {
         return res.status(404).json({ message: "No such user exists" });
@@ -80,7 +80,7 @@ const userController = {
   // Detele a friend
   async deleteFriend(req, res) {
     try {
-      const user = await user.findOneAndUpdate(
+      const user = await User.findOneAndUpdate(
         { _id: req.params.userId },
         { $pull: { friends: req.params.friendId } },
         { new: true }
